@@ -17,8 +17,8 @@ var baseConfig = {
         use: [{
           loader: 'babel-loader',
           options: {
-            "presets": [ [ "env" ] ],
-            "plugins": [ "transform-es2015-destructuring", "transform-runtime", "es6-promise" ]
+            "presets": [["env"]],
+            "plugins": ["transform-es2015-destructuring", "transform-runtime", "es6-promise"]
           }
         }],
         exclude: /node_modules/
@@ -61,15 +61,16 @@ var baseConfig = {
   }
 };
 
-let targets = [ 'web', 'node' ].map((target) => {
+let targets = ['web', 'node'].map((target) => {
   let obj = webpackMerge(baseConfig, {
     target: target,
     entry: {
       app: target === 'web'
         ? process.env.NODE_ENV === 'development'
-          ? [ `./src/${target}.entry.js`, 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000' ]
-          : [ `./src/${target}.entry.js` ]
-        : [ `./src/${target}.entry.js` ]
+          // ? [`./src/${target}.entry.js`, 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000']
+          ? [`./src/${target}.entry.js`]
+          : [`./src/${target}.entry.js`]
+        : [`./src/${target}.entry.js`]
       ,
     },
     output: {
@@ -84,15 +85,15 @@ let targets = [ 'web', 'node' ].map((target) => {
     plugins: target === 'web'
       ? process.env.NODE_ENV === 'development'
         ? [
-            new webpack.HotModuleReplacementPlugin(),
-            new ExtractTextPlugin("style.css")
-          ]
+          new webpack.HotModuleReplacementPlugin(),
+          new ExtractTextPlugin("style.css")
+        ]
         : [
-            new webpack.DefinePlugin({ 'process.env': { NODE_ENV: '"production"' } }),
-            new webpack.optimize.UglifyJsPlugin({ sourceMap: true, compress: { warnings: false } }),
-            new webpack.LoaderOptionsPlugin({ minimize: true }),
-            new ExtractTextPlugin("style.css")
-          ]
+          new webpack.DefinePlugin({ 'process.env': { NODE_ENV: '"production"' } }),
+          new webpack.optimize.UglifyJsPlugin({ sourceMap: true, compress: { warnings: false } }),
+          new webpack.LoaderOptionsPlugin({ minimize: true }),
+          new ExtractTextPlugin("style.css")
+        ]
       : []
     ,
     devtool: target === 'web'
