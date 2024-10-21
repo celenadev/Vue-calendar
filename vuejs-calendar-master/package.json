@@ -10,6 +10,7 @@
   },
   "license": "UNLICENSED",
   "scripts": {
+    "serve" : "npm run build && npm run start",
     "start": "nodemon ./server.js --ignore src/ -e js,html,css",
     "build": "rimraf dist && cross-env NODE_ENV=development webpack --config webpack.config.js --progress --hide-modules",
     "webpack-config-output": "rimraf tmp && mkdir tmp && cross-env NODE_ENV=development node ./scripts/webpack-config-output.js && cross-env NODE_ENV=development node ./scripts/webpack-config-output.js"
